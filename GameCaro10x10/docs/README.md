@@ -1,14 +1,15 @@
 # MockProject_Caro_LGTM
 
-## Giới thiệu
+"Giới thiệu"
 Đây là khung trò chơi Caro 10x10 bằng C++ với kiến trúc module rõ ràng, hỗ trợ:
+
 - Bàn cờ 10x10 và luật thắng 5 ô liên tiếp.
 - Chơi 2 người hoặc người vs bot.
 - Bot AI nhiều cấp độ, trong đó có chế độ `Hard` dùng thuật toán Minimax.
 - Quản lý dữ liệu người chơi và lưu replay.
 - Giao diện console đơn giản với menu điều hướng.
 
-## Cấu trúc dự án
+"Cấu trúc dự án"
 GameCaro10x10/
 ├── main.cpp
 ├── Manager/
@@ -52,7 +53,8 @@ GameCaro10x10/
     ├── README.md
     └── ARCHITECTURE.md
 
-## Tính năng chính
+"Tính năng chính"
+
 - `core/` chứa logic bàn cờ, kiểm tra thắng thua và lịch sử nước đi.
 - `player/` quản lý người chơi, đọc/ghi dữ liệu vào file.
 - `bot/` định nghĩa bot AI và thuật toán Minimax cho chế độ khó.
@@ -60,7 +62,7 @@ GameCaro10x10/
 - `ui/` xây dựng menu và điều khiển vòng chơi.
 - `Manager/` điều phối menu chính và lựa chọn chế độ chơi.
 
-## Chạy chương trình
+"Chạy chương trình"
 Từ thư mục `GameCaro10x10`, biên dịch bằng:
 
 ```bash
@@ -73,7 +75,8 @@ Và chạy:
 ./main.exe
 ```
 
-## Lưu ý
+"Lưu ý"
+
 - Dữ liệu người chơi lưu trong `data/players.txt`.
 - Replay có thể được mở rộng lưu vào `data/replays.txt`.
 - Phiên bản hiện tại đang cung cấp khung chơi và AI mẫu; bạn có thể bổ sung chức năng ghi replay, tính điểm và nâng cấp bot.
