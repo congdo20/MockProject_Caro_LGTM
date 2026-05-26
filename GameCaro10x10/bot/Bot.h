@@ -1,12 +1,9 @@
-// Bot.h
-// [Thành viên 2] Khai báo thuật toán AI
-
-// Bot.h
 #ifndef BOT_H
 #define BOT_H
 
-#include "Player.h"
-#include "Board.h"
+#include "../player/Player.h"
+#include "../core/Board.h"
+#include <utility>
 
 class Bot : public Player
 {
@@ -15,10 +12,10 @@ private:
 
     std::pair<int, int> moveEasy(const Board &board);
     std::pair<int, int> moveNormal(const Board &board);
-    std::pair<int, int> moveHard(const Board &board); // Áp dụng Minimax
+    std::pair<int, int> moveHard(const Board &board);
 
 public:
-    Bot(int lvl, char s) : Player("Bot AI", s), level(lvl) {}
+    Bot(int lvl, char s);
     std::pair<int, int> getNextMove(const Board &board);
 };
 

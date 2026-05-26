@@ -1,18 +1,53 @@
 # MockProject_Caro_LGTM
 
 GameCaro10x10/
-│
-├── main.cpp                 <-- [Thành viên 4] Luồng chính & Menu
-│
-├── Board.h                  <-- [Thành viên 1] Khai báo ma trận & logic bàn cờ
-├── Board.cpp                <-- [Thành viên 1] Định nghĩa logic, vẽ, check thắng
-│
-├── Player.h                 <-- [Chung] Lớp cơ sở cho Người và Bot
-├── Bot.h                    <-- [Thành viên 2] Khai báo thuật toán AI
-├── Bot.cpp                  <-- [Thành viên 2] Định nghĩa Easy, Normal, Hard (Minimax)
-│
-├── Storage.h                <-- [Thành viên 3] Khai báo đọc/ghi file, tìm kiếm
-├── Storage.cpp              <-- [Thành viên 3] Định nghĩa I/O Stream, Matchmaking
-│
-└── GameManager.h            <-- [Thành viên 4] Khai báo quản lý trận đấu, Replay
-└── GameManager.cpp          <-- [Thành viên 4] Định nghĩa vòng lặp game, Replay
+├── main.cpp
+├── core/
+│   ├── Board.h
+│   ├── Board.cpp
+│   ├── GameLogic.h
+│   ├── GameLogic.cpp
+│   ├── Move.h
+│   └── Move.cpp
+├── player/
+│   ├── Player.h
+│   ├── Player.cpp
+│   ├── PlayerManager.h
+│   └── PlayerManager.cpp
+├── bot/
+│   ├── Bot.h
+│   ├── Bot.cpp
+│   ├── Minimax.h
+│   ├── Minimax.cpp
+│   ├── Evaluation.h
+│   └── Evaluation.cpp
+├── replay/
+│   ├── Replay.h
+│   ├── Replay.cpp
+│   ├── FileManager.h
+│   └── FileManager.cpp
+├── data/
+│   ├── players.txt
+│   └── replays.txt
+├── ui/
+│   ├── Game.h
+│   ├── Game.cpp
+│   ├── Menu.h
+│   └── Menu.cpp
+└── docs/
+    ├── README.md
+    └── ARCHITECTURE.md
+
+## Mục tiêu
+Bộ khung này cung cấp:
+- Lớp `Board`, `GameLogic`, `Move` để quản lý trạng thái bàn cờ và kiểm tra thắng.
+- Lớp `Player`, `PlayerManager` để quản lý người chơi và thông tin cá nhân.
+- Bot AI với 3 cấp độ, gồm `Minimax` và `Evaluation`.
+- Chức năng `Replay` và `FileManager` để lưu/truy xuất lịch sử trận đấu.
+- Giao diện console với `Menu` và `Game`.
+
+## Build
+
+```bash
+g++ GameCaro10x10/main.cpp GameCaro10x10/core/*.cpp GameCaro10x10/player/*.cpp GameCaro10x10/bot/*.cpp GameCaro10x10/replay/*.cpp GameCaro10x10/ui/*.cpp -o GameCaro10x10/main.exe
+```

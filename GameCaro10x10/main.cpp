@@ -2,7 +2,7 @@
 // [Thành viên 4] Luồng chính & Menu
 
 // main.cpp
-#include "GameManager.h"
+#include "manager/GameManager.h"
 
 int main()
 {

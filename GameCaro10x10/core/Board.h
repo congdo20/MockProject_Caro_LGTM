@@ -18,6 +18,8 @@ public:
     void reset();
     void display() const;
     bool makeMove(int row, int col, char symbol);
+    void setCell(int row, int col, char symbol);
+    char getCell(int row, int col) const;
     bool checkWin(int row, int col) const;
     bool checkDraw() const;
     int getSize() const { return size; }
