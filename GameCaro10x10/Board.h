@@ -1,0 +1,26 @@
+// Board.h
+// [Thành viên 1] Khai báo ma trận & logic bàn cờ
+
+// Board.h
+#ifndef BOARD_H
+#define BOARD_H
+
+#include <vector>
+
+class Board
+{
+private:
+    int size;
+    std::vector<std::vector<char>> matrix;
+
+public:
+    Board();
+    void reset();
+    void display() const;
+    bool makeMove(int row, int col, char symbol);
+    bool checkWin(int row, int col) const;
+    bool checkDraw() const;
+    int getSize() const { return size; }
+};
+
+#endif
