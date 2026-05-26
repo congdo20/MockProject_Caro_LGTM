@@ -15,4 +15,4 @@ GameCaro10x10/
 ├── Storage.cpp              <-- [Thành viên 3] Định nghĩa I/O Stream, Matchmaking
 │
 └── GameManager.h            <-- [Thành viên 4] Khai báo quản lý trận đấu, Replay
-    └── GameManager.cpp      <-- [Thành viên 4] Định nghĩa vòng lặp game, Replay
+└── GameManager.cpp          <-- [Thành viên 4] Định nghĩa vòng lặp game, Replay
