@@ -1,69 +1,115 @@
 #include "Minimax.h"
 #include "Evaluation.h"
 #include <algorithm>
+#include <vector>
+#include <cmath>
 
-static int evaluateBoard(const Board &board, char symbol)
-{
-    return Evaluation::evaluate(board, symbol);
-}
+static std::vector<std::pair<int, int>> getCandidateMoves(const Board &board, int radius = 2) {
+    int size = board.getSize();
+    std::vector<std::vector<bool>> isCandidate(size, std::vector<bool>(size, false));
+    std::vector<std::pair<int, int>> candidates;
+    bool hasAnyPiece = false;
 
-static int minimax(Board &board, int depth, bool maximizingPlayer, char playerSymbol, char opponentSymbol)
-{
-    if (depth == 0)
-    {
-        return evaluateBoard(board, playerSymbol);
-    }
-
-    int bestValue = maximizingPlayer ? -100000 : 100000;
-    for (int row = 0; row < board.getSize(); ++row)
-    {
-        for (int col = 0; col < board.getSize(); ++col)
-        {
-            if (board.getCell(row, col) != ' ')
-            {
-                continue;
-            }
-            char symbol = maximizingPlayer ? playerSymbol : opponentSymbol;
-            board.setCell(row, col, symbol);
-            int value = minimax(board, depth - 1, !maximizingPlayer, playerSymbol, opponentSymbol);
-            board.setCell(row, col, ' ');
-            if (maximizingPlayer)
-            {
-                bestValue = std::max(bestValue, value);
-            }
-            else
-            {
-                bestValue = std::min(bestValue, value);
+    for (int r = 0; r < size; ++r) {
+        for (int c = 0; c < size; ++c) {
+            if (board.getCell(r, c) != ' ') {
+                hasAnyPiece = true;
+                for (int dr = -radius; dr <= radius; ++dr) {
+                    for (int dc = -radius; dc <= radius; ++dc) {
+                        int nr = r + dr;
+                        int nc = c + dc;
+                        if (nr >= 0 && nr < size && nc >= 0 && nc < size
+                            && board.getCell(nr, nc) == ' ' && !isCandidate[nr][nc]) {
+                            isCandidate[nr][nc] = true;
+                            candidates.push_back({nr, nc});
+                        }
+                    }
+                }
             }
         }
     }
-    return bestValue;
+
+    if (!hasAnyPiece) {
+        candidates.push_back({size / 2, size / 2});
+    }
+
+    return candidates;
 }
 
-std::pair<int, int> Minimax::findBestMove(const Board &board, char symbol, int depth)
-{
+static int minimax(Board &board, int depth, int alpha, int beta,
+                   bool maximizingPlayer, char playerSymbol, char opponentSymbol) {
+    if (depth == 0) {
+        return Evaluation::evaluate(board, playerSymbol);
+    }
+
+    auto candidates = getCandidateMoves(board, 2);
+
+    if (candidates.empty()) {
+        return Evaluation::evaluate(board, playerSymbol);
+    }
+
+    if (maximizingPlayer) {
+        int bestValue = -1000000;
+        for (auto &[r, c] : candidates) {
+            board.setCell(r, c, playerSymbol);
+            int value = minimax(board, depth - 1, alpha, beta, false, playerSymbol, opponentSymbol);
+            board.setCell(r, c, ' ');
+            bestValue = std::max(bestValue, value);
+            alpha = std::max(alpha, value);
+            if (beta <= alpha) break; 
+        }
+        return bestValue;
+    } else {
+        int bestValue = 1000000;
+        for (auto &[r, c] : candidates) {
+            board.setCell(r, c, opponentSymbol);
+            int value = minimax(board, depth - 1, alpha, beta, true, playerSymbol, opponentSymbol);
+            board.setCell(r, c, ' ');
+            bestValue = std::min(bestValue, value);
+            beta = std::min(beta, value);
+            if (beta <= alpha) break; 
+        }
+        return bestValue;
+    }
+}
+
+std::pair<int, int> Minimax::findBestMove(const Board &board, char symbol, int depth) {
     Board copy = board;
     char opponent = (symbol == 'X') ? 'O' : 'X';
-    int bestScore = -100000;
-    std::pair<int, int> bestMove = {0, 0};
+    int bestScore = -1000000;
+    std::pair<int, int> bestMove = {-1, -1};
 
-    for (int row = 0; row < copy.getSize(); ++row)
-    {
-        for (int col = 0; col < copy.getSize(); ++col)
-        {
-            if (copy.getCell(row, col) != ' ')
-            {
-                continue;
-            }
-            copy.makeMove(row, col, symbol);
-            int score = minimax(copy, depth - 1, false, symbol, opponent);
-            copy.setCell(row, col, ' ');
-            if (score > bestScore)
-            {
-                bestScore = score;
-                bestMove = {row, col};
-            }
+    auto candidates = getCandidateMoves(copy, 2);
+
+    if (candidates.empty()) {
+        return {copy.getSize() / 2, copy.getSize() / 2};
+    }
+
+    for (auto &[r, c] : candidates) {
+        copy.setCell(r, c, symbol);
+
+        if (copy.checkWin(r, c)) {
+            copy.setCell(r, c, ' ');
+            return {r, c}; 
+        }
+
+        int score = minimax(copy, depth - 1, -1000000, 1000000, false, symbol, opponent);
+        copy.setCell(r, c, ' ');
+
+        if (score > bestScore) {
+            bestScore = score;
+            bestMove = {r, c};
         }
     }
+
+    for (auto &[r, c] : candidates) {
+        copy.setCell(r, c, opponent);
+        if (copy.checkWin(r, c)) {
+            copy.setCell(r, c, ' ');
+            return {r, c}; 
+        }
+        copy.setCell(r, c, ' ');
+    }
+
     return bestMove;
 }
