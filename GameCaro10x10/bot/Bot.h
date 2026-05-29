@@ -8,7 +8,7 @@
 class Bot : public Player
 {
 private:
-    int level; // 1: Easy, 2: Normal, 3: Hard
+    int level; 
 
     std::pair<int, int> moveEasy(const Board &board);
     std::pair<int, int> moveNormal(const Board &board);
