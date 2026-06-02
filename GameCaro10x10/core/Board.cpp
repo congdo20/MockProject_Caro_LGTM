@@ -12,19 +12,33 @@ void Board::reset()
 
 void Board::display() const
 {
-    std::cout << "   ";
+    std::cout << "    ";
     for (int col = 0; col < size; ++col)
     {
-        std::cout << (col < 10 ? " " : "") << col << " ";
+        std::cout << col << "   ";
+    }
+    std::cout << '\n';
+
+    std::cout << "  |";
+    for (int col = 0; col < size; ++col)
+    {
+        std::cout << "---|";
     }
     std::cout << '\n';
 
     for (int row = 0; row < size; ++row)
     {
-        std::cout << (row < 10 ? " " : "") << row << " ";
+        std::cout << row << " |";
         for (int col = 0; col < size; ++col)
         {
-            std::cout << " " << (matrix[row][col] == ' ' ? '.' : matrix[row][col]) << " ";
+            std::cout << " " << matrix[row][col] << " |";
+        }
+        std::cout << '\n';
+
+        std::cout << "  |";
+        for (int col = 0; col < size; ++col)
+        {
+            std::cout << "---|";
         }
         std::cout << '\n';
     }
