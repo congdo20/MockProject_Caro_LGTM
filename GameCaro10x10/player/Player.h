@@ -1,7 +1,5 @@
 // Player.h
-// [Chung] Lớp cơ sở cho Người và Bot
 
-// Player.h
 #ifndef PLAYER_H
 #define PLAYER_H
 
