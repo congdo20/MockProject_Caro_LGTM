@@ -6,8 +6,8 @@ LDFLAGS :=
 
 TARGET := main.exe
 
-SRCDIRS := . Manager core player bot replay ui
-SOURCES := $(wildcard main.cpp) $(wildcard Manager/*.cpp) $(wildcard core/*.cpp) $(wildcard player/*.cpp) $(wildcard bot/*.cpp) $(wildcard replay/*.cpp) $(wildcard ui/*.cpp)
+SRCDIRS := . manager core player bot replay ui
+SOURCES := $(wildcard main.cpp) $(wildcard manager/*.cpp) $(wildcard core/*.cpp) $(wildcard player/*.cpp) $(wildcard bot/*.cpp) $(wildcard replay/*.cpp) $(wildcard ui/*.cpp)
 OBJECTS := $(SOURCES:.cpp=.o)
 
 .PHONY: all clean run rebuild

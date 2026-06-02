@@ -1,4 +1,5 @@
 #include "Board.h"
+#include <iomanip>
 #include <iostream>
 
 Board::Board() : size(10), matrix(size, std::vector<char>(size, ' '))
@@ -12,22 +13,44 @@ void Board::reset()
 
 void Board::display() const
 {
-    std::cout << "   ";
+    std::cout << '\n';
+
+    // Column labels
+    std::cout << "    ";
     for (int col = 0; col < size; ++col)
     {
-        std::cout << (col < 10 ? " " : "") << col << " ";
+        std::cout << " " << col << "  ";
     }
     std::cout << '\n';
 
+    // Grid rows
     for (int row = 0; row < size; ++row)
     {
-        std::cout << (row < 10 ? " " : "") << row << " ";
+        // Horizontal separator
+        std::cout << "   +";
         for (int col = 0; col < size; ++col)
         {
-            std::cout << " " << (matrix[row][col] == ' ' ? '.' : matrix[row][col]) << " ";
+            std::cout << "---+";
+        }
+        std::cout << '\n';
+
+        // Row with cells
+        std::cout << std::setw(2) << row << " |";
+        for (int col = 0; col < size; ++col)
+        {
+            char cell = matrix[row][col] == ' ' ? '.' : matrix[row][col];
+            std::cout << " " << cell << " |";
         }
         std::cout << '\n';
     }
+
+    // Bottom border
+    std::cout << "   +";
+    for (int col = 0; col < size; ++col)
+    {
+        std::cout << "---+";
+    }
+    std::cout << '\n';
 }
 
 bool Board::makeMove(int row, int col, char symbol)
