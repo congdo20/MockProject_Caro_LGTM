@@ -80,3 +80,15 @@ Và chạy:
 - Dữ liệu người chơi lưu trong `data/players.txt`.
 - Replay có thể được mở rộng lưu vào `data/replays.txt`.
 - Phiên bản hiện tại đang cung cấp khung chơi và AI mẫu; bạn có thể bổ sung chức năng ghi replay, tính điểm và nâng cấp bot.
+
+## Cách dùng Makefile
+
+Mở terminal và vào thư mục GameCaro10x10:
+
+Biên dịch dự án: make
+
+Chạy chương trình: make run
+
+Xóa file biên dịch tạm thời và executable: make clean
+
+Dọn và biên dịch lại từ đầu: make rebuild

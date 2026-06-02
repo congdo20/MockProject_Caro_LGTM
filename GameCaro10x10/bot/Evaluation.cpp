@@ -65,7 +65,7 @@ int Evaluation::evaluate(const Board &board, char symbol)
                 int prevR = r - dx[i];
                 int prevC = c - dy[i];
                 if (prevR >= 0 && prevR < size && prevC >= 0 && prevC < size && board.getCell(prevR, prevC) == current) {
-                    continue
+                    continue;
                 }
 
                 int count = 1;

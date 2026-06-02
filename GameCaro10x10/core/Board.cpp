@@ -1,4 +1,5 @@
 #include "Board.h"
+#include <iomanip>
 #include <iostream>
 
 Board::Board() : size(10), matrix(size, std::vector<char>(size, ' '))
@@ -26,6 +27,7 @@ void Board::display() const
     }
     std::cout << '\n';
 
+    // Grid rows
     for (int row = 0; row < size; ++row)
     {
         std::cout << row << " |";
@@ -42,6 +44,14 @@ void Board::display() const
         }
         std::cout << '\n';
     }
+
+    // Bottom border
+    std::cout << "   +";
+    for (int col = 0; col < size; ++col)
+    {
+        std::cout << "---+";
+    }
+    std::cout << '\n';
 }
 
 bool Board::makeMove(int row, int col, char symbol)
