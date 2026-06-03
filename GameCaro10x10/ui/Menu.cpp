@@ -12,7 +12,7 @@ int Menu::showMainMenu() const
     std::cout << "Lua chon: ";
 
     std::string line;
-    if (!std::getline(std::cin, line))
+    if (!std::getline(std::cin >> std::ws, line))
     {
         return -1;
     }
@@ -32,7 +32,7 @@ int Menu::showGameTypeMenu() const
     std::cout << "Lua chon: ";
 
     std::string line;
-    if (!std::getline(std::cin, line))
+    if (!std::getline(std::cin >> std::ws, line))
     {
         return -1;
     }

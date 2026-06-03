@@ -18,7 +18,8 @@ public:
     void playHumanVsHuman();
     void playHumanVsBot();
     void showPlayers() const;
-    void showSavedReplays() const;
+    void showSavedReplays();
+    void playReplayFromFile(const std::string &filename) const;
 };
 
 #endif

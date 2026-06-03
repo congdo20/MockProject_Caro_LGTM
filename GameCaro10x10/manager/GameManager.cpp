@@ -10,6 +10,11 @@ void GameManager::mainMenu()
     while (true)
     {
         int choice = menu.showMainMenu();
+        if (choice == -1)
+        {
+            std::cout << "Thoat chuong trinh.\n";
+            return;
+        }
         switch (choice)
         {
         case 1:
@@ -22,6 +27,10 @@ void GameManager::mainMenu()
             else if (gameType == 2)
             {
                 game.playHumanVsBot();
+            }
+            else if (gameType == -1)
+            {
+                return;
             }
             break;
         }

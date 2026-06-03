@@ -9,6 +9,7 @@
 #include <ctime>
 #include <cctype>
 #include <optional>
+#include <vector>
 
 Game::Game()
     : playerManager("data/players.txt")
@@ -285,7 +286,39 @@ void Game::showPlayers() const
     playerManager.printPlayers();
 }
 
-void Game::showSavedReplays() const
+void Game::playReplayFromFile(const std::string &filename) const
+{
+    Replay replay;
+    if (!FileManager::loadReplay(replay, filename))
+    {
+        std::cout << "Khong the tai file replay: " << filename << "\n";
+        return;
+    }
+
+    std::cout << "\n=== PHAT LAI: " << replay.getName() << " ===\n\n";
+
+    Board board;
+    board.reset();
+    board.display();
+
+    const auto &moves = replay.getMoves();
+    for (size_t i = 0; i < moves.size(); ++i)
+    {
+        std::cout << "Nuoc " << (i + 1) << "/" << moves.size();
+        std::cout << " - " << moves[i].symbol << " tai (" << moves[i].row << ", " << moves[i].col << ")\n";
+
+        board.makeMove(moves[i].row, moves[i].col, moves[i].symbol);
+        board.display();
+
+        std::cout << "Nhan Enter de tiep tuc..." << std::flush;
+        std::string dummy;
+        std::getline(std::cin, dummy);
+    }
+
+    std::cout << "Ket thuc replay.\n";
+}
+
+void Game::showSavedReplays()
 {
     std::ifstream replayIndex("data/replays.txt");
     if (!replayIndex.is_open())
@@ -294,21 +327,44 @@ void Game::showSavedReplays() const
         return;
     }
 
+    std::vector<std::string> replayFiles;
     std::string replayFile;
-    bool hasReplay = false;
-    std::cout << "Danh sach replay da luu:\n";
+    std::cout << "\nDanh sach replay da luu:\n";
     while (std::getline(replayIndex, replayFile))
     {
         if (replayFile.empty())
         {
             continue;
         }
-        std::cout << "- " << replayFile << "\n";
-        hasReplay = true;
+        replayFiles.push_back(replayFile);
+        std::cout << (replayFiles.size()) << ". " << replayFile << "\n";
     }
 
-    if (!hasReplay)
+    if (replayFiles.empty())
     {
         std::cout << "Chua co replay nao duoc luu.\n";
+        return;
+    }
+
+    std::cout << "0. Quay lai\n";
+    std::cout << "Chon replay (0-" << replayFiles.size() << "): ";
+
+    std::string choiceLine;
+    if (!std::getline(std::cin, choiceLine))
+    {
+        return;
+    }
+
+    std::istringstream parser(choiceLine);
+    int choice = -1;
+    parser >> choice;
+
+    if (choice > 0 && choice <= static_cast<int>(replayFiles.size()))
+    {
+        playReplayFromFile(replayFiles[choice - 1]);
+    }
+    else if (choice != 0)
+    {
+        std::cout << "Lua chon khong hop le.\n";
     }
 }
