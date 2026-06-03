@@ -29,6 +29,11 @@ void PlayerManager::registerPlayer(const std::string &name)
     }
 }
 
+void PlayerManager::updateResult(const std::string &name, const std::string &result)
+{
+    storage.updateResult(name, result);
+}
+
 PlayerData *PlayerManager::findPlayer(const std::string &name)
 {
     return storage.searchPlayer(name);
