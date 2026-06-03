@@ -15,6 +15,7 @@ public:
     bool load();
     bool save() const;
     void registerPlayer(const std::string &name);
+    void updateResult(const std::string &name, const std::string &result);
     PlayerData *findPlayer(const std::string &name);
     void printPlayers() const;
 };

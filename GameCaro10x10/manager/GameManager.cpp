@@ -26,10 +26,10 @@ void GameManager::mainMenu()
             break;
         }
         case 2:
-            std::cout << "Chuc nang hien thi danh sach nguoi choi dang duoc phat trien.\n";
+            game.showPlayers();
             break;
         case 3:
-            std::cout << "Chuc nang xem replay dang duoc phat trien.\n";
+            game.showSavedReplays();
             break;
         case 0:
             std::cout << "Cam on ban da choi!\n";

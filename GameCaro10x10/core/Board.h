@@ -1,5 +1,4 @@
 // Board.h
-// [Thành viên 1] Khai báo ma trận & logic bàn cờ
 
 // Board.h
 #ifndef BOARD_H

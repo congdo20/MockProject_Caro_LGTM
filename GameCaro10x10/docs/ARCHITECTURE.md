@@ -11,7 +11,7 @@ Tài liệu này mô tả kiến trúc của dự án Caro 10x10, phân chia tr�
 - `bot/`: AI và thuật toán đánh giá.
 - `replay/`: ghi nhận và phát lại trận đấu.
 - `ui/`: menu và điều khiển tương tác.
-- `Manager/`: điều phối luồng chính và chuyển đổi chế độ chơi.
+- `manager/`: điều phối luồng chính và chuyển đổi chế độ chơi.
 
 "Dòng chảy chính"
 

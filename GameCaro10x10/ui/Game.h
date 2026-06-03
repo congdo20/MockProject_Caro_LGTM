@@ -17,6 +17,8 @@ public:
     Game();
     void playHumanVsHuman();
     void playHumanVsBot();
+    void showPlayers() const;
+    void showSavedReplays() const;
 };
 
 #endif
