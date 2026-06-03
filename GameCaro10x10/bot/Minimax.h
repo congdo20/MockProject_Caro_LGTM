@@ -9,7 +9,7 @@ class Minimax
 {
 public:
     static std::pair<int, int> findBestMove(const Board &board, char symbol, int depth = 2);
-    static std::vector<std::pair<int, std::pair<int, int>>> findTopMoves(const Board &board, char symbol, int depth = 2, int topN = 5);
+    static std::vector<std::pair<int, std::pair<int, int>>> findTopMoves(const Board &board, char symbol, int depth, int topN);
 };
 
 #endif

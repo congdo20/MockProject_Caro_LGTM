@@ -23,17 +23,32 @@ std::pair<int, int> Bot::moveEasy(const Board &board)
         int randomIndex = std::rand() % emptyCells.size();
         return emptyCells[randomIndex];
     }
-    
     return {0, 0};
 }
 
 std::pair<int, int> Bot::moveNormal(const Board &board)
 {
-    if (std::rand() % 100 < 30) {
+    auto topMoves = Minimax::findTopMoves(board, getSymbol(), 2, 3);
+    
+    if (topMoves.empty()) {
         return moveEasy(board);
     }
     
-    return Minimax::findBestMove(board, getSymbol(), 3);
+    if (topMoves.size() == 1) {
+        return topMoves[0].second;
+    }
+
+    int roll = std::rand() % 6;
+    int pick;
+    if (roll < 3) {
+        pick = 0;
+    } else if (roll < 5) {
+        pick = 1; 
+    } else {
+        pick = std::min(2, (int)topMoves.size() - 1); 
+    }
+    
+    return topMoves[pick].second;
 }
 
 std::pair<int, int> Bot::moveHard(const Board &board)

@@ -1,24 +1,5 @@
 #include "Evaluation.h"
 
-static void analyzeDirection(const Board &board, int r, int c, int dx, int dy, char player,
-                              int &count, bool &openEnd) {
-    int size = board.getSize();
-    int nr = r + dx;
-    int nc = c + dy;
-    count = 0;
-    openEnd = false;
-
-    while (nr >= 0 && nr < size && nc >= 0 && nc < size && board.getCell(nr, nc) == player) {
-        count++;
-        nr += dx;
-        nc += dy;
-    }
-
-    if (nr >= 0 && nr < size && nc >= 0 && nc < size && board.getCell(nr, nc) == ' ') {
-        openEnd = true;
-    }
-}
-
 static int scorePattern(int length, int openEnds) {
     if (length >= 5) return 100000;
 
@@ -26,22 +7,23 @@ static int scorePattern(int length, int openEnds) {
         return 0;
     }
 
-    if (openEnds == 1) {
+    if (openEnds == 1) { 
         switch (length) {
-            case 4: return 5000;  
+            case 4: return 5000; 
             case 3: return 200;
             case 2: return 50;
             case 1: return 10;
             default: return 0;
         }
-    }
-
-    switch (length) {
+    } 
+    else{
+        switch (length) { 
         case 4: return 50000;  
         case 3: return 5000;  
         case 2: return 500;
         case 1: return 20;
         default: return 0;
+        }
     }
 }
 
@@ -79,7 +61,7 @@ int Evaluation::evaluate(const Board &board, char symbol)
                 int openEnds = 0;
 
                 if (prevR >= 0 && prevR < size && prevC >= 0 && prevC < size && board.getCell(prevR, prevC) == ' ') {
-                    openEnds++;
+                    openEnds++; 
                 }
                 if (nextR >= 0 && nextR < size && nextC >= 0 && nextC < size && board.getCell(nextR, nextC) == ' ') {
                     openEnds++;
