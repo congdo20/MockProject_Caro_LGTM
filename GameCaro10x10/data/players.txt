@@ -5,3 +5,4 @@ do 0 1 0
 Trinh 2 0 1
 Do 0 1 0
 TestPlayer 0 0 0
+hi 0 1 0

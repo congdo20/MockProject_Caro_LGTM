@@ -1,14 +1,14 @@
 # Makefile for GameCaro10x10
 
-CXX := g++
+CXX      := g++
 CXXFLAGS := -std=c++17 -Wall -Wextra -Wshadow -Wconversion -O2
-LDFLAGS :=
+LDFLAGS  :=
 
-TARGET := main.exe
+TARGET   := main.exe
+BUILDDIR := build
 
-SRCDIRS := . manager core player bot replay ui
 SOURCES := $(wildcard main.cpp) $(wildcard manager/*.cpp) $(wildcard core/*.cpp) $(wildcard player/*.cpp) $(wildcard bot/*.cpp) $(wildcard replay/*.cpp) $(wildcard ui/*.cpp)
-OBJECTS := $(SOURCES:.cpp=.o)
+OBJECTS := $(patsubst %.cpp,$(BUILDDIR)/%.o,$(SOURCES))
 
 .PHONY: all clean run rebuild
 
@@ -17,13 +17,15 @@ all: $(TARGET)
 $(TARGET): $(OBJECTS)
 	$(CXX) $(LDFLAGS) $^ -o $@
 
-%.o: %.cpp
+$(BUILDDIR)/%.o: %.cpp
+	@if not exist "$(subst /,\,$(@D))" mkdir "$(subst /,\,$(@D))"
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 run: $(TARGET)
 	./$(TARGET)
 
 clean:
-	rm -f $(TARGET) $(OBJECTS)
+	@if exist "$(BUILDDIR)" rmdir /s /q "$(BUILDDIR)"
+	@if exist "$(TARGET)" del /f /q "$(TARGET)"
 
 rebuild: clean all

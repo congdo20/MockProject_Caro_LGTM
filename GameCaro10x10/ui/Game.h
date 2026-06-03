@@ -18,6 +18,7 @@ public:
     void playHumanVsHuman();
     void playHumanVsBot();
     void showPlayers() const;
+    void searchPlayer() const;
     void showSavedReplays();
     void playReplayFromFile(const std::string &filename) const;
 };

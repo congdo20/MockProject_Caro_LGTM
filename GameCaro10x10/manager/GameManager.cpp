@@ -40,6 +40,9 @@ void GameManager::mainMenu()
         case 3:
             game.showSavedReplays();
             break;
+        case 4:
+            game.searchPlayer();
+            break;
         case 0:
             std::cout << "Cam on ban da choi!\n";
             return;
