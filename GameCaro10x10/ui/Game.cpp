@@ -8,6 +8,7 @@
 #include <chrono>
 #include <ctime>
 #include <cctype>
+#include <optional>
 
 Game::Game()
     : playerManager("data/players.txt")
@@ -21,20 +22,48 @@ static void clearInput()
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
-static std::pair<int, int> askMove(const Board &board)
+static bool readPairOfInts(int &first, int &second)
+{
+    std::string line;
+    if (!std::getline(std::cin >> std::ws, line) || line.empty())
+    {
+        return false;
+    }
+
+    std::istringstream parser(line);
+    if (!(parser >> first >> second))
+    {
+        return false;
+    }
+
+    std::string extra;
+    if (parser >> extra)
+    {
+        return false;
+    }
+
+    return true;
+}
+
+static std::optional<std::pair<int, int>> askMove()
 {
     int row, col;
     while (true)
     {
         std::cout << "Nhap dong va cot: ";
-        if (std::cin >> row >> col)
+        if (readPairOfInts(row, col))
         {
-            break;
+            return {{row, col}};
         }
+
+        if (std::cin.eof())
+        {
+            std::cout << "\nKet thuc nhap. Thoat tran dau.\n";
+            return std::nullopt;
+        }
+
         std::cout << "Nhap khong hop le. Vui long nhap lai.\n";
-        clearInput();
     }
-    return {row, col};
 }
 
 static std::string makeReplayFilename(const std::string &baseName)
@@ -77,8 +106,13 @@ static bool saveReplayFile(const Replay &replay)
 static void promptSaveReplay(const Replay &replay)
 {
     std::cout << "Ban co muon luu replay? (Y/N): ";
-    char choice;
-    std::cin >> choice;
+    std::string choiceLine;
+    if (!std::getline(std::cin >> std::ws, choiceLine) || choiceLine.empty())
+    {
+        return;
+    }
+
+    char choice = choiceLine[0];
     if (std::toupper(static_cast<unsigned char>(choice)) == 'Y')
     {
         if (saveReplayFile(replay))
@@ -97,9 +131,9 @@ void Game::playHumanVsHuman()
     GameLogic logic;
     std::string nameX, nameO;
     std::cout << "Ten nguoi choi X: ";
-    std::cin >> nameX;
+    std::getline(std::cin >> std::ws, nameX);
     std::cout << "Ten nguoi choi O: ";
-    std::cin >> nameO;
+    std::getline(std::cin >> std::ws, nameO);
 
     playerManager.registerPlayer(nameX);
     playerManager.registerPlayer(nameO);
@@ -111,7 +145,12 @@ void Game::playHumanVsHuman()
     {
         logic.getBoard().display();
         std::cout << "Luot cua " << logic.getCurrentPlayer() << "\n";
-        auto [row, col] = askMove(logic.getBoard());
+        auto move = askMove();
+        if (!move)
+        {
+            break;
+        }
+        auto [row, col] = *move;
         if (!logic.makeMove(row, col))
         {
             std::cout << "Nuoc di khong hop le, thu lai.\n";
@@ -158,9 +197,24 @@ void Game::playHumanVsBot()
     std::string humanName;
     int level;
     std::cout << "Ten nguoi choi: ";
-    std::cin >> humanName;
-    std::cout << "Chon do kho Bot (1-Easy, 2-Normal, 3-Hard): ";
-    std::cin >> level;
+    std::getline(std::cin >> std::ws, humanName);
+
+    std::string levelInput;
+    while (true)
+    {
+        std::cout << "Chon do kho Bot (1-Easy, 2-Normal, 3-Hard): ";
+        if (!std::getline(std::cin, levelInput))
+        {
+            clearInput();
+            continue;
+        }
+        std::istringstream levelStream(levelInput);
+        if (levelStream >> level && (level == 1 || level == 2 || level == 3))
+        {
+            break;
+        }
+        std::cout << "Do kho khong hop le. Vui long nhap 1, 2 hoac 3.\n";
+    }
 
     Bot bot(level, 'O');
     playerManager.registerPlayer(humanName);
@@ -174,7 +228,12 @@ void Game::playHumanVsBot()
         if (logic.getCurrentPlayer() == 'X')
         {
             std::cout << "Luot cua " << humanName << " (X)\n";
-            auto [row, col] = askMove(logic.getBoard());
+            auto move = askMove();
+            if (!move)
+            {
+                break;
+            }
+            auto [row, col] = *move;
             if (!logic.makeMove(row, col))
             {
                 std::cout << "Nuoc di khong hop le, thu lai.\n";
