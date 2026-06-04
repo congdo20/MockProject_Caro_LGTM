@@ -3,3 +3,4 @@ data/replay_Trinh_vs_Bot_20260603_162642.txt
 data/replay_Trinh_vs_Bot_20260603_163747.txt
 data/replay_Trinh_vs_Do_20260603_163928.txt
 data/test_replay.txt
+data/replay_hi_vs_Bot_20260603_185258.txt

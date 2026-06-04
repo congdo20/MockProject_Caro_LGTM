@@ -8,6 +8,7 @@ int Menu::showMainMenu() const
     std::cout << "1. Bat dau tran dau moi\n";
     std::cout << "2. Danh sach nguoi choi\n";
     std::cout << "3. Xem replay\n";
+    std::cout << "4. Tim kiem nguoi choi\n";
     std::cout << "0. Thoat\n";
     std::cout << "Lua chon: ";
 

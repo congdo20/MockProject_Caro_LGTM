@@ -8,6 +8,7 @@
 #include <chrono>
 #include <ctime>
 #include <cctype>
+#include <cstdlib>
 #include <optional>
 #include <vector>
 
@@ -72,7 +73,7 @@ static std::string makeReplayFilename(const std::string &baseName)
     auto now = std::chrono::system_clock::now();
     auto time = std::chrono::system_clock::to_time_t(now);
     std::tm localTime;
-    localtime_r(&time, &localTime);
+    localtime_s(&localTime, &time);
 
     std::ostringstream filename;
     filename << "data/replay_" << baseName << "_" << std::put_time(&localTime, "%Y%m%d_%H%M%S") << ".txt";
@@ -144,6 +145,7 @@ void Game::playHumanVsHuman()
 
     while (true)
     {
+        system("cls");
         logic.getBoard().display();
         std::cout << "Luot cua " << logic.getCurrentPlayer() << "\n";
         auto move = askMove();
@@ -225,6 +227,7 @@ void Game::playHumanVsBot()
 
     while (true)
     {
+        system("cls");
         logic.getBoard().display();
         if (logic.getCurrentPlayer() == 'X')
         {
@@ -304,6 +307,7 @@ void Game::playReplayFromFile(const std::string &filename) const
     const auto &moves = replay.getMoves();
     for (size_t i = 0; i < moves.size(); ++i)
     {
+        system("cls");
         std::cout << "Nuoc " << (i + 1) << "/" << moves.size();
         std::cout << " - " << moves[i].symbol << " tai (" << moves[i].row << ", " << moves[i].col << ")\n";
 
@@ -316,6 +320,30 @@ void Game::playReplayFromFile(const std::string &filename) const
     }
 
     std::cout << "Ket thuc replay.\n";
+}
+
+void Game::searchPlayer() const
+{
+    std::cout << "Nhap ten nguoi choi can tim: ";
+    std::string name;
+    if (!std::getline(std::cin >> std::ws, name) || name.empty())
+    {
+        std::cout << "Ten khong hop le.\n";
+        return;
+    }
+
+    PlayerData *player = const_cast<PlayerManager &>(playerManager).findPlayer(name);
+    if (!player)
+    {
+        std::cout << "Khong tim thay nguoi choi \"" << name << "\".\n";
+        return;
+    }
+
+    std::cout << "\n--- Thong tin nguoi choi ---\n";
+    std::cout << "Ten  : " << player->name   << "\n";
+    std::cout << "Thang: " << player->wins   << "\n";
+    std::cout << "Thua : " << player->losses << "\n";
+    std::cout << "Hoa  : " << player->draws  << "\n";
 }
 
 void Game::showSavedReplays()
