@@ -5,6 +5,7 @@
 #include <utility>
 #include <vector>
 
+// Lop Minimax: tim nuoc di tot nhat hoac danh sach top nuoc di bang thuat toan Minimax + Alpha-Beta
 class Minimax
 {
 public:

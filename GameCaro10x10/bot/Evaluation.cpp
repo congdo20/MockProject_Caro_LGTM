@@ -1,5 +1,6 @@
 #include "Evaluation.h"
 
+// Tinh diem cho mot mau quan (do dai chuoi va so dau mo)
 static int scorePattern(int length, int openEnds) {
     if (length >= 5) return 100000;
 
@@ -7,7 +8,7 @@ static int scorePattern(int length, int openEnds) {
         return 0;
     }
 
-    if (openEnds == 1) { 
+    if (openEnds == 1) { // chi mo mot dau
         switch (length) {
             case 4: return 5000; 
             case 3: return 200;
@@ -16,7 +17,7 @@ static int scorePattern(int length, int openEnds) {
             default: return 0;
         }
     } 
-    else{
+    else{ // mo hai dau
         switch (length) { 
         case 4: return 50000;  
         case 3: return 5000;  
@@ -27,6 +28,7 @@ static int scorePattern(int length, int openEnds) {
     }
 }
 
+// Danh gia ban co: cong diem cho quan minh, tru diem cho quan doi phuong
 int Evaluation::evaluate(const Board &board, char symbol)
 {
     int totalScore = 0;
@@ -46,6 +48,7 @@ int Evaluation::evaluate(const Board &board, char symbol)
             for (int i = 0; i < 4; ++i) {
                 int prevR = r - dx[i];
                 int prevC = c - dy[i];
+                // Bo qua neu khong phai dau chuoi (tranh dem trung)
                 if (prevR >= 0 && prevR < size && prevC >= 0 && prevC < size && board.getCell(prevR, prevC) == current) {
                     continue;
                 }

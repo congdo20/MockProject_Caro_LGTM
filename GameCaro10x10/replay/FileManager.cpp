@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 
+// Ghi replay: dong 1 la ten, cac dong sau la row col symbol
 bool FileManager::saveReplay(const Replay &replay, const std::string &filename)
 {
     std::ofstream output(filename);
@@ -15,6 +16,7 @@ bool FileManager::saveReplay(const Replay &replay, const std::string &filename)
     return true;
 }
 
+// Doc replay tu file va nap vao doi tuong Replay
 bool FileManager::loadReplay(Replay &replay, const std::string &filename)
 {
     std::ifstream input(filename);

@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+// Lop Replay: luu ten van va danh sach nuoc di de phat lai sau
 class Replay
 {
 private:

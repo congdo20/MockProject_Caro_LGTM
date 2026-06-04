@@ -1,4 +1,4 @@
-// Player.h
+// Lop co so Player: luu ten va ky hieu quan (X hoac O)
 
 #ifndef PLAYER_H
 #define PLAYER_H
@@ -8,8 +8,8 @@
 class Player
 {
 protected:
-    std::string name;
-    char symbol;
+    std::string name;  // ten nguoi choi hoac "Bot AI"
+    char symbol;       // ky hieu quan: 'X' hoac 'O'
 
 public:
     Player(std::string n, char s) : name(n), symbol(s) {}

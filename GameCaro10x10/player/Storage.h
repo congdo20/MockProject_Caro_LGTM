@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+// Cau truc luu thong ke mot nguoi choi
 struct PlayerData
 {
     std::string name;
@@ -12,6 +13,7 @@ struct PlayerData
     int draws = 0;
 };
 
+// Lop Storage: doc/ghi danh sach nguoi choi tu file van ban
 class Storage
 {
 private:
@@ -24,7 +26,7 @@ public:
     bool saveToFile() const;
     void updateResult(const std::string &name, const std::string &result);
     PlayerData *searchPlayer(const std::string &name);
-    PlayerData *findMatchmaking(const std::string &name);
+    PlayerData *findMatchmaking(const std::string &name); // tim doi thu co wins gan nhat
     void addPlayer(const PlayerData &player);
     const std::vector<PlayerData> &getPlayers() const;
 };

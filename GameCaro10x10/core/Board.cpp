@@ -2,21 +2,21 @@
 #include <iomanip>
 #include <iostream>
 
-// Khởi tạo bàn cờ 10x10, tất cả ô mang giá trị ' ' (trống)
+// Khoi tao ban co 10x10, tat ca o mang gia tri ' ' (trong)
 Board::Board() : size(10), matrix(size, std::vector<char>(size, ' '))
 {
 }
 
-// Đặt lại toàn bộ ô về trống, dùng khi bắt đầu ván mới
+// Dat lai toan bo o ve trong, dung khi bat dau van moi
 void Board::reset()
 {
     matrix.assign(size, std::vector<char>(size, ' '));
 }
 
-// In bàn cờ ra console theo dạng lưới có nhãn hàng/cột
+// In ban co ra console theo dang luoi co nhan hang/cot
 void Board::display() const
 {
-    // In nhãn cột
+    // In nhan cot
     std::cout << "    ";
     for (int col = 0; col < size; ++col)
     {
@@ -24,7 +24,7 @@ void Board::display() const
     }
     std::cout << '\n';
 
-    // In đường kẻ ngang phân cách đầu bảng
+    // In duong ke ngang phan cach dau bang
     std::cout << "  |";
     for (int col = 0; col < size; ++col)
     {
@@ -32,7 +32,7 @@ void Board::display() const
     }
     std::cout << '\n';
 
-    // In từng hàng cùng nhãn hàng và đường kẻ ngang phân cách
+    // In tung hang cung nhan hang va duong ke ngang phan cach
     for (int row = 0; row < size; ++row)
     {
         std::cout << row << " |";
@@ -50,7 +50,7 @@ void Board::display() const
         std::cout << '\n';
     }
 
-    // In viền dưới bàn cờ
+    // In vien duoi ban co
     std::cout << "   +";
     for (int col = 0; col < size; ++col)
     {
@@ -59,34 +59,34 @@ void Board::display() const
     std::cout << '\n';
 }
 
-// Đặt quân symbol vào ô (row, col)
-// Trả về false nếu tọa độ ngoài biên hoặc ô đã có quân, true nếu thành công
+// Dat quan symbol vao o (row, col)
+// Tra ve false neu toa do ngoai bien hoac o da co quan, true neu thanh cong
 bool Board::makeMove(int row, int col, char symbol)
 {
     if (row < 0 || row >= size || col < 0 || col >= size)
     {
-        return false; // tọa độ ngoài biên
+        return false; // toa do ngoai bien
     }
     if (matrix[row][col] != ' ')
     {
-        return false; // ô đã có quân
+        return false; // o da co quan
     }
     matrix[row][col] = symbol;
     return true;
 }
 
-// Ghi trực tiếp symbol vào ô (row, col) không kiểm tra ô trống hay chưa
-// Dùng nội bộ cho thuật toán AI thử/rút nước đi
+// Ghi truc tiep symbol vao o (row, col) khong kiem tra o trong hay chua
+// Dung noi bo cho thuat toan AI thu/rut nuoc di
 void Board::setCell(int row, int col, char symbol)
 {
     if (row < 0 || row >= size || col < 0 || col >= size)
     {
-        return; // bỏ qua nếu ngoài biên
+        return; // bo qua neu ngoai bien
     }
     matrix[row][col] = symbol;
 }
 
-// Trả về ký tự tại ô (row, col), trả ' ' nếu tọa độ ngoài biên
+// Tra ve ky tu tai o (row, col), tra ' ' neu toa do ngoai bien
 char Board::getCell(int row, int col) const
 {
     if (row < 0 || row >= size || col < 0 || col >= size)
@@ -96,7 +96,7 @@ char Board::getCell(int row, int col) const
     return matrix[row][col];
 }
 
-// Hàm nội bộ: đếm số quân liên tiếp cùng loại tính từ (row, col) theo hướng (dRow, dCol)
+// Ham noi bo: dem so quan lien tiep cung loai tinh tu (row, col) theo huong (dRow, dCol)
 static int countDirection(const std::vector<std::vector<char>> &matrix, int row, int col, int dRow, int dCol)
 {
     int count = 0;
@@ -114,8 +114,8 @@ static int countDirection(const std::vector<std::vector<char>> &matrix, int row,
     return count;
 }
 
-// Kiểm tra quân vừa đặt tại (row, col) có tạo thành chuỗi 5 liên tiếp không
-// Kiểm tra 4 hướng: ngang, dọc, chéo chính, chéo phụ
+// Kiem tra quan vua dat tai (row, col) co tao thanh chuoi 5 lien tiep khong
+// Kiem tra 4 huong: ngang, doc, cheo chinh, cheo phu
 bool Board::checkWin(int row, int col) const
 {
     if (row < 0 || row >= size || col < 0 || col >= size)
@@ -125,10 +125,10 @@ bool Board::checkWin(int row, int col) const
     char symbol = matrix[row][col];
     if (symbol == ' ')
     {
-        return false; // ô trống không thể thắng
+        return false; // o trong khong the thang
     }
 
-    // Các cặp hướng: (ngang), (dọc), (chéo chính), (chéo phụ)
+    // Cac cap huong: (ngang), (doc), (cheo chinh), (cheo phu)
     const std::vector<std::vector<char>> directions = {
         {0, 1},
         {1, 0},
@@ -139,17 +139,17 @@ bool Board::checkWin(int row, int col) const
     {
         int dRow = dir[0];
         int dCol = dir[1];
-        // Đếm tổng quân liên tiếp theo hai chiều của hướng hiện tại, cộng thêm 1 cho ô hiện tại
+        // Dem tong quan lien tiep theo hai chieu cua huong hien tai, cong them 1 cho o hien tai
         int count = 1 + countDirection(matrix, row, col, dRow, dCol) + countDirection(matrix, row, col, -dRow, -dCol);
         if (count >= 5)
         {
-            return true; // thắng nếu đủ 5 quân liên tiếp
+            return true; // thang neu du 5 quan lien tiep
         }
     }
     return false;
 }
 
-// Kiểm tra bàn cờ đã đầy chưa (không còn ô trống → hòa)
+// Kiem tra ban co da day chua (khong con o trong -> hoa)
 bool Board::checkDraw() const
 {
     for (int row = 0; row < size; ++row)
@@ -158,9 +158,9 @@ bool Board::checkDraw() const
         {
             if (matrix[row][col] == ' ')
             {
-                return false; // còn ô trống, chưa hòa
+                return false; // con o trong, chua hoa
             }
         }
     }
-    return true; // toàn bộ ô đã có quân
+    return true; // toan bo o da co quan
 }

@@ -3,6 +3,7 @@
 #include "../ui/Game.h"
 #include <iostream>
 
+// Vong lap menu chinh: choi moi, danh sach nguoi choi, replay, tim kiem, thoat
 void GameManager::mainMenu()
 {
     Menu menu;
@@ -19,6 +20,7 @@ void GameManager::mainMenu()
         {
         case 1:
         {
+            // Chon kieu choi: 2 nguoi hoac nguoi vs Bot
             int gameType = menu.showGameTypeMenu();
             if (gameType == 1)
             {

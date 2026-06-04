@@ -9,6 +9,7 @@ Storage::Storage(std::string file)
 {
 }
 
+// Doc file: moi dong gom ten wins losses draws
 bool Storage::loadFromFile()
 {
     players.clear();
@@ -36,6 +37,7 @@ bool Storage::loadFromFile()
     return true;
 }
 
+// Ghi toan bo danh sach nguoi choi ra file
 bool Storage::saveToFile() const
 {
     std::ofstream output(filename);
@@ -51,6 +53,7 @@ bool Storage::saveToFile() const
     return true;
 }
 
+// Tang wins/losses/draws theo ket qua van; tao nguoi choi moi neu chua co
 void Storage::updateResult(const std::string &name, const std::string &result)
 {
     PlayerData *player = searchPlayer(name);
@@ -76,6 +79,7 @@ void Storage::updateResult(const std::string &name, const std::string &result)
     }
 }
 
+// Tim nguoi choi theo ten chinh xac
 PlayerData *Storage::searchPlayer(const std::string &name)
 {
     for (auto &player : players)
@@ -88,6 +92,7 @@ PlayerData *Storage::searchPlayer(const std::string &name)
     return nullptr;
 }
 
+// Tim nguoi choi co so tran thang gan voi target nhat (dung cho matchmaking)
 PlayerData *Storage::findMatchmaking(const std::string &name)
 {
     if (players.empty())
@@ -115,6 +120,7 @@ PlayerData *Storage::findMatchmaking(const std::string &name)
     return best;
 }
 
+// Them nguoi choi moi vao danh sach trong bo nho
 void Storage::addPlayer(const PlayerData &player)
 {
     players.push_back(player);

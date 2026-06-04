@@ -1,11 +1,13 @@
 #include "Replay.h"
 #include <iostream>
 
+// Khoi tao replay voi ten van (vd: "A_vs_B")
 Replay::Replay(const std::string &title)
     : name(title)
 {
 }
 
+// Them mot nuoc di vao lich su replay
 void Replay::addMove(int row, int col, char symbol)
 {
     moves.emplace_back(row, col, symbol);
@@ -21,6 +23,7 @@ const std::string &Replay::getName() const
     return name;
 }
 
+// In danh sach nuoc di ra console
 void Replay::print() const
 {
     std::cout << "Replay: " << name << "\n";

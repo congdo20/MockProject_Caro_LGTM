@@ -3,6 +3,7 @@
 
 #include "../core/Board.h"
 
+// Lop Evaluation: tinh diem the cho ban co tu goc nhin mot ky hieu quan
 class Evaluation
 {
 public:

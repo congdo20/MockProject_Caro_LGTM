@@ -5,24 +5,24 @@
 #include "Move.h"
 #include <vector>
 
-// Lớp GameLogic: điều phối luật chơi, quản lý lượt đi, lịch sử nước đi và trạng thái thắng/hòa
+// Lop GameLogic: dieu phoi luat choi, quan ly luot di, lich su nuoc di va trang thai thang/hoa
 class GameLogic
 {
 private:
-    Board board;                    // bàn cờ hiện tại
-    char currentPlayer;             // ký hiệu người chơi đang đến lượt ('X' hoặc 'O')
-    std::vector<Move> history;      // lịch sử các nước đi đã thực hiện trong ván
+    Board board;                    // ban co hien tai
+    char currentPlayer;             // ky hieu nguoi choi dang den luot ('X' hoac 'O')
+    std::vector<Move> history;      // lich su cac nuoc di da thuc hien trong van
 
 public:
-    GameLogic();                                            // khởi tạo: reset bàn cờ, đặt người đi trước là 'X'
-    void reset();                                           // đặt lại toàn bộ trạng thái về đầu ván mới
-    bool makeMove(int row, int col);                        // thực hiện nước đi tại (row, col) cho người chơi hiện tại, trả false nếu không hợp lệ
-    bool isWinningMove(int row, int col) const;             // kiểm tra nước vừa đặt tại (row, col) có thắng không
-    bool isDraw() const;                                    // kiểm tra bàn cờ đã hòa (đầy mà chưa có người thắng)
-    void switchPlayer();                                    // chuyển lượt sang người chơi kia
-    char getCurrentPlayer() const;                          // trả về ký hiệu người chơi đang đến lượt
-    const Board &getBoard() const;                          // trả về tham chiếu const đến bàn cờ hiện tại
-    const std::vector<Move> &getHistory() const;            // trả về tham chiếu const đến lịch sử nước đi
+    GameLogic();                                            // khoi tao: reset ban co, dat nguoi di truoc la 'X'
+    void reset();                                           // dat lai toan bo trang thai ve dau van moi
+    bool makeMove(int row, int col);                        // thuc hien nuoc di tai (row, col) cho nguoi choi hien tai, tra false neu khong hop le
+    bool isWinningMove(int row, int col) const;             // kiem tra nuoc vua dat tai (row, col) co thang khong
+    bool isDraw() const;                                    // kiem tra ban co da hoa (day ma chua co nguoi thang)
+    void switchPlayer();                                    // chuyen luot sang nguoi choi kia
+    char getCurrentPlayer() const;                          // tra ve ky hieu nguoi choi dang den luot
+    const Board &getBoard() const;                          // tra ve tham chieu const den ban co hien tai
+    const std::vector<Move> &getHistory() const;            // tra ve tham chieu const den lich su nuoc di
 };
 
 #endif

@@ -4,6 +4,7 @@
 #include "Replay.h"
 #include <string>
 
+// Lop FileManager: luu va doc replay tu file van ban
 class FileManager
 {
 public:

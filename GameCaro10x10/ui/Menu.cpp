@@ -2,6 +2,7 @@
 #include <iostream>
 #include <sstream>
 
+// Hien thi menu chinh va doc lua chon tu nguoi dung
 int Menu::showMainMenu() const
 {
     std::cout << "\n=== Game Caro 10x10 ===\n";
@@ -24,6 +25,7 @@ int Menu::showMainMenu() const
     return choice;
 }
 
+// Hien thi menu chon kieu choi (PvP hoac vs Bot)
 int Menu::showGameTypeMenu() const
 {
     std::cout << "\n--- Lua chon kieu choi ---\n";

@@ -4,6 +4,7 @@
 #include <vector>
 #include <cmath>
 
+// Lay danh sach o trong gan cac quan da dat (ban kinh radius), hoac tam ban neu chua co quan
 static std::vector<std::pair<int, int>> getCandidateMoves(const Board &board, int radius = 2) {
     int size = board.getSize();
     std::vector<std::vector<bool>> isCandidate(size, std::vector<bool>(size, false));
@@ -35,6 +36,7 @@ static std::vector<std::pair<int, int>> getCandidateMoves(const Board &board, in
     return candidates;
 }
 
+// Ham de quy Minimax co cat tia Alpha-Beta, danh gia bang Evaluation khi het do sau
 static int minimax(Board &board, int depth, int alpha, int beta,
                    bool maximizingPlayer, char playerSymbol, char opponentSymbol) {
     if (depth == 0) {
@@ -56,7 +58,7 @@ static int minimax(Board &board, int depth, int alpha, int beta,
             bestValue = std::max(bestValue, value);
             alpha = std::max(alpha, value);
             if (beta <= alpha) {
-                break; 
+                break; // cat tia beta
             }
         }
         return bestValue;
@@ -68,12 +70,13 @@ static int minimax(Board &board, int depth, int alpha, int beta,
             board.setCell(r, c, ' ');
             bestValue = std::min(bestValue, value);
             beta = std::min(beta, value);
-            if (beta <= alpha) break; 
+            if (beta <= alpha) break; // cat tia alpha
         }
         return bestValue;
     }
 }
 
+// Tim nuoc di co diem cao nhat: uu tien thang ngay, chan thua, roi moi goi Minimax
 std::pair<int, int> Minimax::findBestMove(const Board &board, char symbol, int depth) {
     Board copy = board;
     char opponent = (symbol == 'X') ? 'O' : 'X';
@@ -86,6 +89,7 @@ std::pair<int, int> Minimax::findBestMove(const Board &board, char symbol, int d
         return {copy.getSize() / 2, copy.getSize() / 2};
     }
 
+    // Neu co nuoc thang ngay thi chon luon
     for (auto &[r, c] : candidates) {
         copy.setCell(r, c, symbol);
         if (copy.checkWin(r, c)) {
@@ -95,6 +99,7 @@ std::pair<int, int> Minimax::findBestMove(const Board &board, char symbol, int d
         copy.setCell(r, c, ' '); 
     }
 
+    // Neu doi phuong thang o nuoc tiep theo thi chan
     for (auto &[r, c] : candidates) {
         copy.setCell(r, c, opponent);
         if (copy.checkWin(r, c)) {
@@ -104,6 +109,7 @@ std::pair<int, int> Minimax::findBestMove(const Board &board, char symbol, int d
         copy.setCell(r, c, ' '); 
     }
 
+    // Duyet tung nuoc ung vien va chon diem cao nhat
     for (auto &[r, c] : candidates) {
         copy.setCell(r, c, symbol);
 
@@ -119,6 +125,7 @@ std::pair<int, int> Minimax::findBestMove(const Board &board, char symbol, int d
     return bestMove;
 }
 
+// Tra ve topN nuoc di co diem cao nhat (sap xep giam dan)
 std::vector<std::pair<int, std::pair<int, int>>> Minimax::findTopMoves(const Board &board, char symbol, int depth, int topN) {
     Board copy = board;
     char opponent = (symbol == 'X') ? 'O' : 'X';

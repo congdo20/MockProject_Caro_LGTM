@@ -12,18 +12,21 @@
 #include <optional>
 #include <vector>
 
+// Khoi tao va nap danh sach nguoi choi tu file data/players.txt
 Game::Game()
     : playerManager("data/players.txt")
 {
     playerManager.load();
 }
 
+// Xoa trang thai loi cua cin sau khi nhap sai
 static void clearInput()
 {
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
+// Doc mot dong chua dung hai so nguyen (hang va cot)
 static bool readPairOfInts(int &first, int &second)
 {
     std::string line;
@@ -47,6 +50,7 @@ static bool readPairOfInts(int &first, int &second)
     return true;
 }
 
+// Hoi nguoi choi nhap hang/cot, lap lai den khi hop le hoac EOF
 static std::optional<std::pair<int, int>> askMove()
 {
     int row, col;
@@ -68,6 +72,7 @@ static std::optional<std::pair<int, int>> askMove()
     }
 }
 
+// Tao ten file replay kem timestamp, thay khoang trang bang '_'
 static std::string makeReplayFilename(const std::string &baseName)
 {
     auto now = std::chrono::system_clock::now();
@@ -89,6 +94,7 @@ static std::string makeReplayFilename(const std::string &baseName)
     return result;
 }
 
+// Luu replay vao file va ghi duong dan vao data/replays.txt
 static bool saveReplayFile(const Replay &replay)
 {
     std::string filename = makeReplayFilename(replay.getName());
@@ -105,6 +111,7 @@ static bool saveReplayFile(const Replay &replay)
     return true;
 }
 
+// Hoi nguoi dung co muon luu replay sau khi ket thuc van
 static void promptSaveReplay(const Replay &replay)
 {
     std::cout << "Ban co muon luu replay? (Y/N): ";
@@ -128,6 +135,7 @@ static void promptSaveReplay(const Replay &replay)
     }
 }
 
+// Van choi 2 nguoi: luu ten, ghi replay, cap nhat thang/thua/hoa
 void Game::playHumanVsHuman()
 {
     GameLogic logic;
@@ -194,6 +202,7 @@ void Game::playHumanVsHuman()
     }
 }
 
+// Van choi nguoi vs Bot: nguoi la X, Bot la O, chon cap do Bot
 void Game::playHumanVsBot()
 {
     GameLogic logic;
@@ -284,11 +293,13 @@ void Game::playHumanVsBot()
     }
 }
 
+// In danh sach nguoi choi tu PlayerManager
 void Game::showPlayers() const
 {
     playerManager.printPlayers();
 }
 
+// Doc file replay va phat lai tung nuoc, nhan Enter de buoc tiep
 void Game::playReplayFromFile(const std::string &filename) const
 {
     Replay replay;
@@ -322,6 +333,7 @@ void Game::playReplayFromFile(const std::string &filename) const
     std::cout << "Ket thuc replay.\n";
 }
 
+// Tim nguoi choi theo ten va hien thi thang/thua/hoa
 void Game::searchPlayer() const
 {
     std::cout << "Nhap ten nguoi choi can tim: ";
@@ -346,6 +358,7 @@ void Game::searchPlayer() const
     std::cout << "Hoa  : " << player->draws  << "\n";
 }
 
+// Doc danh sach file replay tu data/replays.txt va cho nguoi dung chon phat lai
 void Game::showSavedReplays()
 {
     std::ifstream replayIndex("data/replays.txt");
