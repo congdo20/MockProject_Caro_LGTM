@@ -1,7 +1,8 @@
 # MockProject_Caro_LGTM
 
 "Giới thiệu"
-Đây là khung trò chơi Caro 10x10 bằng C++ với kiến trúc module rõ ràng, hỗ trợ:
+
+Trò chơi Caro 10x10 bằng C++:
 
 - Bàn cờ 10x10 và luật thắng 5 ô liên tiếp.
 - Chơi 2 người hoặc người vs bot.
@@ -10,9 +11,10 @@
 - Giao diện console đơn giản với menu điều hướng.
 
 "Cấu trúc dự án"
+
 GameCaro10x10/
 ├── main.cpp
-├── Manager/
+├── manager/
 │   ├── GameManager.h
 │   └── GameManager.cpp
 ├── core/
@@ -60,13 +62,14 @@ GameCaro10x10/
 - `bot/` định nghĩa bot AI và thuật toán Minimax cho chế độ khó.
 - `replay/` lưu và in lại các nước đi của trận đấu.
 - `ui/` xây dựng menu và điều khiển vòng chơi.
-- `Manager/` điều phối menu chính và lựa chọn chế độ chơi.
+- `manager/` điều phối menu chính và lựa chọn chế độ chơi.
 
 "Chạy chương trình"
+
 Từ thư mục `GameCaro10x10`, biên dịch bằng:
 
 ```bash
-g++ main.cpp Manager/*.cpp core/*.cpp player/*.cpp bot/*.cpp replay/*.cpp ui/*.cpp -o main.exe
+g++ main.cpp manager/*.cpp core/*.cpp player/*.cpp bot/*.cpp replay/*.cpp ui/*.cpp -o main.exe
 ```
 
 Và chạy:
@@ -79,10 +82,26 @@ Và chạy:
 
 Mở terminal và vào thư mục GameCaro10x10:
 
-Biên dịch dự án: make
+Biên dịch dự án:
 
-Chạy chương trình: make run
+```bash
+make
+```
 
-Xóa file biên dịch tạm thời và executable: make clean
+Chạy chương trình:
 
-Dọn và biên dịch lại từ đầu: make rebuild
+```bash
+make run
+```
+
+Xóa file biên dịch tạm thời và executable:
+
+```bash
+make clean
+```
+
+Dọn và biên dịch lại từ đầu:
+
+```bash
+make rebuild
+```
