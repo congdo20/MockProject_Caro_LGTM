@@ -2,7 +2,7 @@
 main.exe
 *.o
 *.obj
-*.exe
+build/
 
 # Editor / OS files
 .DS_Store
