@@ -6,3 +6,5 @@ data/test_replay.txt
 data/replay_hi_vs_Bot_20260603_185258.txt
 data/replay_trinh_vs_do_20260604_163758.txt
 data/replay_trinh_vs_Bot_20260604_163957.txt
+data/replay_Trinh_vs_Do_20260605_142644.txt
+data/replay_Trinh_vs_Bot_20260605_171743.txt
