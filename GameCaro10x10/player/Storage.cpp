@@ -4,6 +4,15 @@
 #include <utility>
 #include <cmath>
 
+namespace
+{
+    void normalizePlayer(PlayerData &player)
+    {
+        player.gamesPlayed = player.wins + player.losses + player.draws;
+        player.score = player.wins * 3 + player.draws;
+    }
+}
+
 Storage::Storage(std::string file)
     : filename(std::move(file))
 {
@@ -28,7 +37,28 @@ bool Storage::loadFromFile()
         }
         std::istringstream parser(line);
         PlayerData data;
-        parser >> data.name >> data.wins >> data.losses >> data.draws;
+        if (!(parser >> data.name >> data.wins >> data.losses >> data.draws))
+        {
+            continue;
+        }
+
+        int score = 0;
+        int gamesPlayed = 0;
+        if (parser >> score)
+        {
+            parser >> gamesPlayed;
+        }
+
+        if (score > 0 || gamesPlayed > 0)
+        {
+            data.score = score;
+            data.gamesPlayed = gamesPlayed;
+        }
+        else
+        {
+            normalizePlayer(data);
+        }
+
         if (!data.name.empty())
         {
             players.push_back(data);
@@ -48,7 +78,8 @@ bool Storage::saveToFile() const
 
     for (const auto &player : players)
     {
-        output << player.name << ' ' << player.wins << ' ' << player.losses << ' ' << player.draws << '\n';
+        output << player.name << ' ' << player.wins << ' ' << player.losses << ' ' << player.draws
+               << ' ' << player.score << ' ' << player.gamesPlayed << '\n';
     }
     return true;
 }
@@ -77,6 +108,8 @@ void Storage::updateResult(const std::string &name, const std::string &result)
     {
         player->draws += 1;
     }
+
+    normalizePlayer(*player);
 }
 
 // Tim nguoi choi theo ten chinh xac
@@ -123,7 +156,9 @@ PlayerData *Storage::findMatchmaking(const std::string &name)
 // Them nguoi choi moi vao danh sach trong bo nho
 void Storage::addPlayer(const PlayerData &player)
 {
-    players.push_back(player);
+    PlayerData newPlayer = player;
+    normalizePlayer(newPlayer);
+    players.push_back(newPlayer);
 }
 
 const std::vector<PlayerData> &Storage::getPlayers() const

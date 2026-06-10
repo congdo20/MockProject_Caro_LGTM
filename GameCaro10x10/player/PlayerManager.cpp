@@ -1,4 +1,5 @@
 #include "PlayerManager.h"
+#include <algorithm>
 #include <iostream>
 
 // Gan file luu tru danh sach nguoi choi
@@ -54,9 +55,38 @@ void PlayerManager::printPlayers() const
         std::cout << "Chua co du lieu nguoi choi.\n";
         return;
     }
-    std::cout << "Danh sach nguoi choi:\n";
-    for (const auto &player : players)
+
+    std::vector<PlayerData> rankedPlayers = players;
+    std::sort(rankedPlayers.begin(), rankedPlayers.end(), [](const PlayerData &left, const PlayerData &right)
+              {
+                  if (left.score != right.score)
+                  {
+                      return left.score > right.score;
+                  }
+                  if (left.wins != right.wins)
+                  {
+                      return left.wins > right.wins;
+                  }
+                  if (left.losses != right.losses)
+                  {
+                      return left.losses < right.losses;
+                  }
+                  return left.name < right.name; });
+
+    std::cout << "Bang xep hang nguoi choi:\n";
+    for (size_t index = 0; index < rankedPlayers.size(); ++index)
     {
-        std::cout << "- " << player.name << ": " << player.wins << "W " << player.losses << "L " << player.draws << "D\n";
+        const auto &player = rankedPlayers[index];
+        int winRate = 0;
+        if (player.gamesPlayed > 0)
+        {
+            winRate = (player.wins * 100) / player.gamesPlayed;
+        }
+
+        std::cout << index + 1 << ". " << player.name
+                  << " | Score: " << player.score
+                  << " | W/L/D: " << player.wins << "/" << player.losses << "/" << player.draws
+                  << " | Win rate: " << winRate << "%"
+                  << " | Da choi: " << player.gamesPlayed << " tran\n";
     }
 }

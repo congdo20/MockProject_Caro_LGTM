@@ -11,10 +11,11 @@
 #include <cstdlib>
 #include <optional>
 #include <vector>
+// #define _Data_Players "data/players.txt"
 
 // Khoi tao va nap danh sach nguoi choi tu file data/players.txt
 Game::Game()
-    : playerManager("data/players.txt")
+    : playerManager("data/players.txt") 
 {
     playerManager.load();
 }
@@ -30,18 +31,18 @@ static void clearInput()
 static bool readPairOfInts(int &first, int &second)
 {
     std::string line;
-    if (!std::getline(std::cin >> std::ws, line) || line.empty())
+    if (!std::getline(std::cin >> std::ws, line) || line.empty()) // Doc dong va bo qua khoang trang dau vao
+    {
+        return false; // Tra ve false neu EOF hoac dong nhap rong
+    }
+
+    std::istringstream parser(line); // Phan tich dong nhap vao thanh hai so nguyen
+    if (!(parser >> first >> second)) // Doc hai so nguyen, tra ve false neu khong hop le
     {
         return false;
     }
 
-    std::istringstream parser(line);
-    if (!(parser >> first >> second))
-    {
-        return false;
-    }
-
-    std::string extra;
+    std::string extra; // Kiem tra xem co du lieu nao sau hai so nguyen hay khong, neu co thi coi nhu nhap sai
     if (parser >> extra)
     {
         return false;
@@ -51,7 +52,7 @@ static bool readPairOfInts(int &first, int &second)
 }
 
 // Hoi nguoi choi nhap hang/cot, lap lai den khi hop le hoac EOF
-static std::optional<std::pair<int, int>> askMove()
+static std::optional<std::pair<int, int>> askMove() // Tra ve cap (hang, cot) neu hop le, tra ve nullopt neu nguoi choi muon thoat (EOF)
 {
     int row, col;
     while (true)
@@ -62,7 +63,7 @@ static std::optional<std::pair<int, int>> askMove()
             return {{row, col}};
         }
 
-        if (std::cin.eof())
+        if (std::cin.eof()) // Neu nguoi choi nhap Ctrl+D (EOF) de thoat
         {
             std::cout << "\nKet thuc nhap. Thoat tran dau.\n";
             return std::nullopt;
@@ -98,12 +99,12 @@ static std::string makeReplayFilename(const std::string &baseName)
 static bool saveReplayFile(const Replay &replay)
 {
     std::string filename = makeReplayFilename(replay.getName());
-    if (!FileManager::saveReplay(replay, filename))
+    if (!FileManager::saveReplay(replay, filename)) // Luu replay vao file, tra ve false neu that bai
     {
         return false;
     }
 
-    std::ofstream indexFile("data/replays.txt", std::ios::app);
+    std::ofstream indexFile("data/replays.txt", std::ios::app); // Mo file danh sach replay de ghi them ten file moi vao cuoi file
     if (indexFile.is_open())
     {
         indexFile << filename << '\n';
@@ -116,7 +117,7 @@ static void promptSaveReplay(const Replay &replay)
 {
     std::cout << "Ban co muon luu replay? (Y/N): ";
     std::string choiceLine;
-    if (!std::getline(std::cin >> std::ws, choiceLine) || choiceLine.empty())
+    if (!std::getline(std::cin >> std::ws, choiceLine) || choiceLine.empty()) // Doc dong va bo qua khoang trang dau vao, tra ve neu EOF hoac dong nhap rong
     {
         return;
     }
@@ -215,13 +216,13 @@ void Game::playHumanVsBot()
     while (true)
     {
         std::cout << "Chon do kho Bot (1-Easy, 2-Normal, 3-Hard): ";
-        if (!std::getline(std::cin, levelInput))
+        if (!std::getline(std::cin, levelInput)) // Doc dong, tra ve false neu EOF, thoat vong lap
         {
             clearInput();
             continue;
         }
         std::istringstream levelStream(levelInput);
-        if (levelStream >> level && (level == 1 || level == 2 || level == 3))
+        if (levelStream >> level && (level == 1 || level == 2 || level == 3)) // Neu doc duoc so va do kho hop le thi thoat vong lap
         {
             break;
         }

@@ -11,6 +11,8 @@ struct PlayerData
     int wins = 0;
     int losses = 0;
     int draws = 0;
+    int score = 0;
+    int gamesPlayed = 0;
 };
 
 // Lop Storage: doc/ghi danh sach nguoi choi tu file van ban

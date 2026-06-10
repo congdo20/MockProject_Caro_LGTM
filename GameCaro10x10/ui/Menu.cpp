@@ -14,12 +14,12 @@ int Menu::showMainMenu() const
     std::cout << "Lua chon: ";
 
     std::string line;
-    if (!std::getline(std::cin >> std::ws, line))
+    if (!std::getline(std::cin >> std::ws, line)) // Doc dong va bo qua khoang trang dau vao
     {
         return -1;
     }
 
-    std::istringstream parser(line);
+    std::istringstream parser(line); // Phan tich dong nhap vao thanh so nguyen
     int choice = -1;
     parser >> choice;
     return choice;
