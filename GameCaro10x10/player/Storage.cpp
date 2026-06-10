@@ -6,7 +6,7 @@
 
 namespace
 {
-    void normalizePlayer(PlayerData &player)
+    void normalizePlayer(PlayerData &player) 
     {
         player.gamesPlayed = player.wins + player.losses + player.draws;
         player.score = player.wins * 3 + player.draws;
